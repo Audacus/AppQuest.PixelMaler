@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayoutMain"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,10 +10,126 @@
     tools:context="ch.fenceposts.appquest.pixelmaler.MainActivity" >
 
     <ch.fenceposts.appquest.pixelmaler.view.DrawingView
-        android:id="@+id/drawingView1"
+        android:id="@+id/drawingView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayoutColors"
+        android:layout_below="@+id/seekBarGridSizeY"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:id="@+id/seekBarGridSizeX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/textViewGridSizeXValue"
+        android:layout_toRightOf="@+id/textViewGridSizeX"
+        android:max="@integer/seek_bar_grid_size_x_max"
+        android:progress="@integer/seek_bar_grid_size_progress" />
+
+    <TextView
+        android:id="@+id/textViewGridSizeX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:text="@string/grid_size_x"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewGridSizeY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewGridSizeX"
+        android:text="@string/grid_size_y"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <SeekBar
+        android:id="@+id/seekBarGridSizeY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/seekBarGridSizeX"
+        android:layout_below="@+id/seekBarGridSizeX"
+        android:layout_toLeftOf="@+id/textViewGridSizeYValue"
+        android:max="@integer/seek_bar_grid_size_y_max"
+        android:progress="@integer/seek_bar_grid_size_progress" />
+
+    <TextView
+        android:id="@+id/textViewGridSizeXValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewGridSizeX"
+        android:layout_alignParentRight="true"
+        android:text="@string/no_value"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewGridSizeYValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/seekBarGridSizeY"
+        android:text="@string/no_value"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutColors"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:weightSum="5" >
+
+        <ImageButton
+            android:id="@+id/imageButtonColor1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff0000"
+            android:contentDescription="@string/content_description_color"
+            android:onClick="imageButtonClicked"
+            android:tag="@string/color" />
+
+        <ImageButton
+            android:id="@+id/imageButtonColor2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00ff00"
+            android:contentDescription="@string/content_description_color"
+            android:onClick="imageButtonClicked"
+            android:tag="@string/color" />
+
+        <ImageButton
+            android:id="@+id/imageButtonColor3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#0000ff"
+            android:contentDescription="@string/content_description_color"
+            android:onClick="imageButtonClicked"
+            android:tag="@string/color" />
+
+        <ImageButton
+            android:id="@+id/imageButtonColor4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#999999"
+            android:contentDescription="@string/content_description_color"
+            android:onClick="imageButtonClicked"
+            android:tag="@string/color" />
+
+        <ImageButton
+            android:id="@+id/imageButtonEraser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/eraser"
+            android:contentDescription="@string/content_description_eraser"
+            android:onClick="imageButtonClicked"
+            android:tag="@string/eraser" />
+    </LinearLayout>
 
 </RelativeLayout>

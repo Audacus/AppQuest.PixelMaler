@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="seek_bar_grid_size_x_max">61</integer>
+    <integer name="seek_bar_grid_size_y_max">78</integer>
+    <integer name="seek_bar_grid_size_progress">1</integer>
+</resources>

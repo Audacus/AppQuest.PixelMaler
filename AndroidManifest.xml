@@ -23,8 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ch.fenceposts.appquest.pixelmaler.view.DrawingView"
+            android:name=".view.DrawingView"
             android:label="@string/title_activity_drawing_view" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
