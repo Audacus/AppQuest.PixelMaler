@@ -1,5 +1,6 @@
 package ch.fenceposts.appquest.pixelmaler;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 
 	private static final int	RESULT_SETTINGS	= 0;
 	private static final String	DEBUG_TAG		= "mydebug";
+	private static final int	MINIMUM_PIXEL	= 5;
 	private View				drawingView;
 	private ImageButton			currentBrush;
 	private SeekBar				seekBarGridSizeX;
@@ -121,9 +123,33 @@ public class MainActivity extends Activity {
 	}
 
 	public void actionLog() {
+		final Map<Point, Paint> pointsGrid = ((DrawingView) drawingView).getPointsGrid();
+		if (pointsGrid.size() < MINIMUM_PIXEL) {
+			AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+			newDialog.setTitle("log?");
+			newDialog.setMessage("Do you really want to log your drawing?");
+			newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					log(pointsGrid);
+				}
+			});
+			newDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+			newDialog.show();
+		} else {
+			log(pointsGrid);
+		}
+	}
+
+	private void log(Map<Point, Paint> pointsGrid) {
 		JSONArray jsonArray = new JSONArray();
 		try {
-			for (Entry<Point, Paint> entry : ((DrawingView) drawingView).getPointsGrid().entrySet()) {
+			for (Entry<Point, Paint> entry : pointsGrid.entrySet()) {
 				JSONObject jsonPixel = new JSONObject();
 				jsonPixel.put("x", entry.getKey().x);
 				jsonPixel.put("y", entry.getKey().y);

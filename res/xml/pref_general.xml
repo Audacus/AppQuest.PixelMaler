@@ -4,7 +4,7 @@
         android:key="pref_button_colors"
         android:persistent="false"
         android:title="@string/pref_button_colors" >
-        <PreferenceCategory android:title="@string/pref_colors_color1" >
+        <DialogPreference android:title="@string/pref_colors_color1" >
             <EditTextPreference
                 android:inputType="number"
                 android:key="pref_colors_color1_red"
@@ -26,7 +26,7 @@
                 android:singleLine="true"
                 android:title="@string/pref_colors_color_blue" >
             </EditTextPreference>
-        </PreferenceCategory>
+        </DialogPreference>
     </PreferenceScreen>
 
     <CheckBoxPreference
