@@ -17,16 +17,16 @@ public class MyOnSeekBarChangeListener implements OnSeekBarChangeListener {
 	private TextView	textViewGridSizeYValue;
 
 	public MyOnSeekBarChangeListener(Activity activity) {
-		this.drawingView = (DrawingView) activity.findViewById(R.id.drawingView);
-		this.seekBarGridSizeX = (SeekBar) activity.findViewById(R.id.seekBarGridSizeX);
-		this.seekBarGridSizeY = (SeekBar) activity.findViewById(R.id.seekBarGridSizeY);
-		this.textViewGridSizeXValue = (TextView) activity.findViewById(R.id.textViewGridSizeXValue);
-		this.textViewGridSizeYValue = (TextView) activity.findViewById(R.id.textViewGridSizeYValue);
+		drawingView = (DrawingView) activity.findViewById(R.id.drawingView);
+		seekBarGridSizeX = (SeekBar) activity.findViewById(R.id.seekBarGridSizeX);
+		seekBarGridSizeY = (SeekBar) activity.findViewById(R.id.seekBarGridSizeY);
+		textViewGridSizeXValue = (TextView) activity.findViewById(R.id.textViewGridSizeXValue);
+		textViewGridSizeYValue = (TextView) activity.findViewById(R.id.textViewGridSizeYValue);
 	}
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if (progress < 1) {
+		if (progress == 0) {
 			seekBar.setProgress(1);
 		}
 		if (seekBar == seekBarGridSizeX) {

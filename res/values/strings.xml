@@ -4,7 +4,10 @@
     <string name="app_name">AppQuest PixelMaler</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="action_clear">clear drawing</string>
+    <string name="action_clear_drawing">clear drawing</string>
+    <string name="action_reset_grid_size">reset grid size</string>
+    <string name="action_new_drawing">new drawing</string>
+    <string name="action_log">log</string>
     <string name="title_activity_drawing_view">DrawingView</string>
     <string name="grid_size_x">x</string>
     <string name="grid_size_y">y</string>

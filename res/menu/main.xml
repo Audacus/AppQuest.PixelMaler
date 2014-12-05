@@ -4,13 +4,28 @@
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
-        android:id="@+id/action_clear"
-        android:orderInCategory="10"
+        android:id="@+id/action_clear_drawing"
+        android:orderInCategory="2"
         android:showAsAction="never"
-        android:title="@string/action_clear"/>
+        android:title="@string/action_clear_drawing"/>
+    <item
+        android:id="@+id/action_reset_grid_size"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:title="@string/action_reset_grid_size"/>
+    <item
+        android:id="@+id/action_new_drawing"
+        android:orderInCategory="3"
+        android:showAsAction="never"
+        android:title="@string/action_new_drawing"/>
+    <item
+        android:id="@+id/action_log"
+        android:orderInCategory="4"
+        android:showAsAction="never"
+        android:title="@string/action_log"/>
 
 </menu>

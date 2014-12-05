@@ -14,13 +14,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import ch.fenceposts.appquest.pixelmaler.R;
 
 /**
  * Die DrawingView ist für die Darstellung und Verwaltung der Zeichenfläche zuständig.
@@ -29,46 +28,38 @@ public class DrawingView extends View {
 
 	private static final String	DEBUG_TAG		= "mydebug";
 	private static final int	CANVAS_MARGIN	= 1;
+	private boolean				isErasing		= false;
 	private int					gridSizeX;
 	private int					gridSizeY;
 	private int					stepSize;
-	// private Paint[][] grid;
 	private List<PointF>		pointsMotionEvent;
 	private Map<Point, Paint>	pointsGrid;
+
 	private Path				drawPath		= new Path();
 	private Paint				paintDraw		= new Paint();
-	private Paint				paintLine		= new Paint();
-	private boolean				isErasing		= false;
 
 	public DrawingView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		paintDraw.setAntiAlias(true);
+		// paintDraw.setAntiAlias(true);
 		paintDraw.setStrokeWidth(20);
 		paintDraw.setStyle(Paint.Style.STROKE);
 		paintDraw.setStrokeJoin(Paint.Join.ROUND);
 		paintDraw.setStrokeCap(Paint.Cap.ROUND);
 
-		paintLine.setColor(0xFF666666);
-		paintLine.setAntiAlias(true);
-		paintLine.setStrokeWidth(1.0f);
-		paintLine.setStyle(Paint.Style.STROKE);
+		gridSizeX = getResources().getInteger(R.integer.grid_size_default);
+		gridSizeY = getResources().getInteger(R.integer.grid_size_default);
 
-		// this.gridSizeX = gridSizeX;
-		// this.gridSizeY = gridSizeY;
-		this.gridSizeX = 4;
-		this.gridSizeY = 2;
-		// this.grid = new Paint[gridSizeX][gridSizeY];
-		this.pointsGrid = new HashMap<>();
-		this.pointsMotionEvent = new ArrayList<>();
+		pointsGrid = new HashMap<>();
+		pointsMotionEvent = new ArrayList<>();
 	}
 
 	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
+
 		Map<Point, Paint> pointsGridTemp = new HashMap<>(pointsGrid);
 		for (Entry<Point, Paint> entry : pointsGridTemp.entrySet()) {
-			if (entry.getKey().x >= gridSizeX || entry.getKey().y >= gridSizeY) {
+			if ((entry.getKey().x >= gridSizeX || entry.getKey().y >= gridSizeY) && pointsGrid.get(entry.getKey()) != null) {
 				pointsGrid.remove(entry.getKey());
 			}
 		}
@@ -79,11 +70,10 @@ public class DrawingView extends View {
 		int stepSizeX = (int) Math.floor((double) maxX / gridSizeX);
 		int stepSizeY = (int) Math.floor((double) maxY / gridSizeY);
 		stepSize = Math.min(stepSizeX, stepSizeY);
-		
 
 		// TODO Zeichne das Gitter
-		Paint paint = new Paint();
-		paint.setColor(Color.BLACK);
+		Paint paintGridLines = new Paint();
+		paintGridLines.setColor(Color.BLACK);
 		int startX;
 		int stopX;
 		int startY;
@@ -95,7 +85,7 @@ public class DrawingView extends View {
 		for (int i = 0; i <= gridSizeX; i++) {
 			startX = (i * stepSize);
 			stopX = startX;
-			canvas.drawLine(startX, startY, stopX, stopY, paint);
+			canvas.drawLine(startX, startY, stopX, stopY, paintGridLines);
 		}
 
 		// draw lines horizontal
@@ -104,36 +94,19 @@ public class DrawingView extends View {
 		for (int i = 0; i <= gridSizeY; i++) {
 			startY = (i * stepSize);
 			stopY = startY;
-			canvas.drawLine(startX, startY, stopX, stopY, paint);
+			canvas.drawLine(startX, startY, stopX, stopY, paintGridLines);
 		}
 
 		// color rectangles
 		for (Entry<Point, Paint> entry : pointsGrid.entrySet()) {
-			int left = (entry.getKey().x) * stepSize;
-			int top = (entry.getKey().y) * stepSize;
+			int left = (entry.getKey().x) * stepSize + 1;
+			int top = (entry.getKey().y) * stepSize + 1;
 			int right = (entry.getKey().x + 1) * stepSize;
 			int bottom = (entry.getKey().y + 1) * stepSize;
 			Rect rect = new Rect(left, top, right, bottom);
-			// canvas.drawRect(rect, entry.getValue());
 			canvas.drawRect(rect, entry.getValue());
 		}
-
-		// for (int counterX = 0; counterX < gridSizeX; counterX++) {
-		// for (int counterY = 0; counterY < gridSizeY; counterY++) {
-		// if (grid[counterX][counterY] != null) {
-		// int left = (counterX - 1) * stepSize;
-		// int top = (counterY - 1) * stepSize;
-		// int right = counterX * stepSize;
-		// int bottom = counterY * stepSize;
-		//
-		// Rect rect = new Rect(left, top, right, bottom);
-		// canvas.drawRect(rect, grid[counterX][counterY]);
-		// }
-		// }
-		// }
-
-		// reset motion points
-//		 pointsMotionEvent.clear();
+		Log.d(DEBUG_TAG, "pointsGrid size:" + String.valueOf(pointsGrid.size()));
 
 		// Zeichnet einen Pfad der dem Finger folgt
 		canvas.drawPath(drawPath, paintDraw);
@@ -165,14 +138,24 @@ public class DrawingView extends View {
 				// TODO Jetzt können wir die zwischengespeicherten Punkte auf das
 				// Gitter umrechnen und zeichnen, bzw. löschen, falls wir isErasing
 				// true ist (optional)
-				for (PointF point : pointsMotionEvent) {
-					if (point.x <= (gridSizeX * stepSize) && point.y <= (gridSizeY * stepSize)) {
-						int gridX = (int) Math.floor(point.x / stepSize);
-						int gridY = (int) Math.floor(point.y / stepSize);
-						pointsGrid.put(new Point(gridX, gridY), new Paint(Color.GREEN));
-						// grid[gridX][gridY] = new Paint(Color.GREEN);
+
+				for (PointF pointMotion : pointsMotionEvent) {
+					if (pointMotion.x <= (gridSizeX * stepSize) && pointMotion.y <= (gridSizeY * stepSize)) {
+						int gridX = (int) Math.floor(pointMotion.x / stepSize);
+						int gridY = (int) Math.floor(pointMotion.y / stepSize);
+						if (isErasing()) {
+							Point point = new Point(gridX, gridY);
+							if (pointsGrid.containsKey(point)) {
+								pointsGrid.remove(point);
+							}
+						} else {
+							Paint paintRectangle = new Paint();
+							paintRectangle.setColor(paintDraw.getColor());
+							pointsGrid.put(new Point(gridX, gridY), paintRectangle);
+						}
 					}
 				}
+				pointsMotionEvent.clear();
 
 				drawPath.reset();
 				break;
@@ -199,7 +182,7 @@ public class DrawingView extends View {
 		this.gridSizeY = gridSizeY;
 		invalidate();
 	}
-	
+
 	public void clearDrawing() {
 		Log.d(DEBUG_TAG, "clearDrawing called");
 		pointsMotionEvent.clear();
@@ -207,21 +190,19 @@ public class DrawingView extends View {
 		invalidate();
 	}
 
-	public void startNew() {
-
-		// TODO Gitter löschen
-		// böh?
-
+	public void resetGridSize() {
+		int seekBarProgressDefault = getResources().getInteger(R.integer.grid_size_default);
+		setGridSize(seekBarProgressDefault, seekBarProgressDefault);
 		invalidate();
+	}
+
+	public void startNew() {
+		resetGridSize();
+		clearDrawing();
 	}
 
 	public void setErase(boolean isErase) {
 		isErasing = isErase;
-		if (isErasing) {
-			paintDraw.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-		} else {
-			paintDraw.setXfermode(null);
-		}
 	}
 
 	public boolean isErasing() {
@@ -229,7 +210,13 @@ public class DrawingView extends View {
 	}
 
 	public void setColor(String color) {
-		invalidate();
+		Log.d(DEBUG_TAG, "setColor(" + color + ")");
 		paintDraw.setColor(Color.parseColor(color));
+		invalidate();
 	}
+
+	public Map<Point, Paint> getPointsGrid() {
+		return pointsGrid;
+	}
+
 }

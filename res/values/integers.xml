@@ -2,5 +2,5 @@
 <resources>
     <integer name="seek_bar_grid_size_x_max">61</integer>
     <integer name="seek_bar_grid_size_y_max">78</integer>
-    <integer name="seek_bar_grid_size_progress">1</integer>
+    <integer name="grid_size_default">11</integer>
 </resources>

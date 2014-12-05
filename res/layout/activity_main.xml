@@ -24,7 +24,7 @@
         android:layout_toLeftOf="@+id/textViewGridSizeXValue"
         android:layout_toRightOf="@+id/textViewGridSizeX"
         android:max="@integer/seek_bar_grid_size_x_max"
-        android:progress="@integer/seek_bar_grid_size_progress" />
+        android:progress="@integer/grid_size_default" />
 
     <TextView
         android:id="@+id/textViewGridSizeX"
@@ -52,7 +52,7 @@
         android:layout_below="@+id/seekBarGridSizeX"
         android:layout_toLeftOf="@+id/textViewGridSizeYValue"
         android:max="@integer/seek_bar_grid_size_y_max"
-        android:progress="@integer/seek_bar_grid_size_progress" />
+        android:progress="@integer/grid_size_default" />
 
     <TextView
         android:id="@+id/textViewGridSizeXValue"
@@ -88,8 +88,8 @@
             android:layout_weight="1"
             android:background="#ff0000"
             android:contentDescription="@string/content_description_color"
-            android:onClick="imageButtonClicked"
-            android:tag="@string/color" />
+            android:onClick="colorClicked"
+            android:tag="#ff0000" />
 
         <ImageButton
             android:id="@+id/imageButtonColor2"
@@ -98,8 +98,8 @@
             android:layout_weight="1"
             android:background="#00ff00"
             android:contentDescription="@string/content_description_color"
-            android:onClick="imageButtonClicked"
-            android:tag="@string/color" />
+            android:onClick="colorClicked"
+            android:tag="#00ff00" />
 
         <ImageButton
             android:id="@+id/imageButtonColor3"
@@ -108,8 +108,8 @@
             android:layout_weight="1"
             android:background="#0000ff"
             android:contentDescription="@string/content_description_color"
-            android:onClick="imageButtonClicked"
-            android:tag="@string/color" />
+            android:onClick="colorClicked"
+            android:tag="#0000ff" />
 
         <ImageButton
             android:id="@+id/imageButtonColor4"
@@ -118,8 +118,8 @@
             android:layout_weight="1"
             android:background="#999999"
             android:contentDescription="@string/content_description_color"
-            android:onClick="imageButtonClicked"
-            android:tag="@string/color" />
+            android:onClick="colorClicked"
+            android:tag="#999999" />
 
         <ImageButton
             android:id="@+id/imageButtonEraser"
@@ -128,8 +128,8 @@
             android:layout_weight="1"
             android:background="@drawable/eraser"
             android:contentDescription="@string/content_description_eraser"
-            android:onClick="imageButtonClicked"
-            android:tag="@string/eraser" />
+            android:onClick="colorClicked"
+            android:tag="#ffffff" />
     </LinearLayout>
 
 </RelativeLayout>
