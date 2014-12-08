@@ -72,9 +72,9 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		switch (id) {
-			case R.id.action_settings:
-				actionSettings();
-				return true;
+//			case R.id.action_settings:
+//				actionSettings();
+//				return true;
 			case R.id.action_clear_drawing:
 				actionClearDrawing();
 				return true;
