@@ -35,11 +35,10 @@ public final class R {
         public static final int selected=0x7f020004;
     }
     public static final class id {
-        public static final int action_clear_drawing=0x7f0b000f;
-        public static final int action_log=0x7f0b0012;
-        public static final int action_new_drawing=0x7f0b0011;
-        public static final int action_reset_grid_size=0x7f0b0010;
-        public static final int action_settings=0x7f0b000e;
+        public static final int action_clear_drawing=0x7f0b000e;
+        public static final int action_log=0x7f0b0011;
+        public static final int action_new_drawing=0x7f0b0010;
+        public static final int action_reset_grid_size=0x7f0b000f;
         public static final int drawingView=0x7f0b0001;
         public static final int imageButtonColor1=0x7f0b0009;
         public static final int imageButtonColor2=0x7f0b000a;
